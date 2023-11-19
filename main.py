@@ -3,6 +3,9 @@ import json
 import streamlit as st
 import requests
 
+weatherApiToken = '48265ba00d3c3245c97646210e7623fb'
+exchangeApiToken = '21587484e81c74956b8697fd7c5cf5c6'
+
 st.set_page_config(layout='wide')
 
 st.title('Cloud Computing & SOA')
@@ -11,11 +14,11 @@ temp_unit = st.selectbox("Select Preferred Temperature Unit", ["Celsius", "Fahre
 st.title('')
 
 def get_static_weather(city):
-    response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid=48265ba00d3c3245c97646210e7623fb")
+    response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={weatherApiToken}")
     return response.json()
 
 def get_static_exchange_rate():
-    response = requests.get(f"http://api.exchangeratesapi.io/v1/latest?access_key=21587484e81c74956b8697fd7c5cf5c6&base=EUR&symbols=USD,GBP,JPY")
+    response = requests.get(f"http://api.exchangeratesapi.io/v1/latest?access_key={exchangeApiToken}&base=EUR&symbols=USD,GBP,JPY")
     return response.json()
 
 # AWS Lambda Functions
@@ -91,7 +94,7 @@ def format_exchange_rates(exchange_data):
         return "Invalid data format"
 
 def get_available_currencies():
-    response = requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=21587484e81c74956b8697fd7c5cf5c6")
+    response = requests.get(f"http://api.exchangeratesapi.io/v1/latest?access_key={exchangeApiToken}")
     if response.status_code == 200:
         data = response.json()
         return list(data['rates'].keys())
@@ -134,7 +137,6 @@ with col3:
                                  format_func=lambda x: '' if x is None else x, key="dynamic_weather")
     if selected_city:
         dynamic_weather = get_dynamic_weather(selected_city)
-        st.subheader(f"Weather in {selected_city}")
         formatted_dynamic_weather = format_weather_data(dynamic_weather, temp_unit)
         for key, value in formatted_dynamic_weather.items():
             st.metric(label=key, value=value)
@@ -149,7 +151,6 @@ with col4:
 
     if currencies_string:
         dynamic_exchange_rates = get_dynamic_exchange_rate(currencies_string)
-        st.subheader("Dynamic Exchange Rates")
         formatted_dynamic_rates = format_exchange_rates(dynamic_exchange_rates)
         for currency, rate in formatted_dynamic_rates.items():
             st.metric(label=f"EUR to {currency}", value=rate)
