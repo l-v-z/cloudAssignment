@@ -7,20 +7,16 @@ st.set_page_config(layout='wide')
 
 st.title('Cloud Computing & SOA')
 st.title('')
-temp_unit = st.selectbox("Select Temperature Unit", ["Celsius", "Fahrenheit"])
+temp_unit = st.selectbox("Select Preferred Temperature Unit", ["Celsius", "Fahrenheit"])
 st.title('')
 
 def get_static_weather(city):
-    # Use a free web service like OpenWeatherMap
     response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid=48265ba00d3c3245c97646210e7623fb")
     return response.json()
-    # pass
 
 def get_static_exchange_rate():
-    # Use a free web service like ExchangeRate-API
     response = requests.get(f"http://api.exchangeratesapi.io/v1/latest?access_key=21587484e81c74956b8697fd7c5cf5c6&base=EUR&symbols=USD,GBP,JPY")
     return response.json()
-    # pass
 
 # AWS Lambda Functions
 def get_dynamic_weather(city):
@@ -116,6 +112,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     static_city = 'Limassol'
     st.subheader(f"Weather in {static_city}")
+    st.divider()
     weather_info = get_static_weather(static_city)
     formatted_weather = format_weather_data(weather_info, temp_unit)
     for key, value in formatted_weather.items():
@@ -123,6 +120,7 @@ with col1:
 
 with col2:
     st.subheader("Exchange Rates against EUR")
+    st.divider()
     exchange_rates = get_static_exchange_rate()
     formatted_rates = format_exchange_rates(exchange_rates)
     for currency, rate in formatted_rates.items():
@@ -130,9 +128,10 @@ with col2:
 
 with col3:
     city_options = load_city_list()
-    selected_city = st.selectbox("Select a city for dynamic weather", [None] + city_options, index=0,
+    st.subheader(f"Weather in selected city")
+    st.divider()
+    selected_city = st.selectbox("Search for a city", [None] + city_options, index=0,
                                  format_func=lambda x: '' if x is None else x, key="dynamic_weather")
-
     if selected_city:
         dynamic_weather = get_dynamic_weather(selected_city)
         st.subheader(f"Weather in {selected_city}")
@@ -142,9 +141,10 @@ with col3:
 
 with col4:
     currency_options = get_available_currencies()
-    selected_currencies = st.multiselect("Select currencies for dynamic exchange rates", currency_options,
+    st.subheader(f"Exchange Rates against euro")
+    st.divider()
+    selected_currencies = st.multiselect("Select one or more currencies", currency_options,
                                          key="dynamic_exchange")
-
     currencies_string = ','.join(selected_currencies)
 
     if currencies_string:
