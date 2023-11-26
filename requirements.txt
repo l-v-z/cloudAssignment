@@ -17,7 +17,6 @@ dnslib==0.9.23
 dnspython==2.4.2
 ecdsa==0.18.0
 fonttools==4.43.1
-future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot11/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-141/future-0.18.2-py3-none-any.whl
 graphviz==0.20.1
 idna==3.4
 importlib-resources==6.1.0
@@ -29,7 +28,6 @@ localstack-client==2.3
 localstack-core==2.3.2
 localstack-ext==2.3.2
 lxml==4.9.3
-macholib @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot11/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-141/macholib-1.15.2-py2.py3-none-any.whl
 markdown-it-py==3.0.0
 matplotlib==3.8.0
 mdurl==0.1.2
@@ -59,7 +57,6 @@ rsa==4.9
 s3transfer==0.7.0
 scipy==1.11.3
 semver==3.0.1
-six @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot11/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-141/six-1.15.0-py2.py3-none-any.whl
 sortedcontainers==2.4.0
 stevedore==5.1.0
 StringDist==1.0.9
