@@ -101,7 +101,7 @@ def get_available_currencies():
     else:
         return ["Error fetching currencies"]
 
-@st.cache_data
+@st.cache_resource
 def load_city_list():
     with open('city.list.json', 'r', encoding='utf-8') as file:
         city_data = json.load(file)
