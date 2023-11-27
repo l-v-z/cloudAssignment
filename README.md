@@ -13,3 +13,11 @@ Link to page: https://cloud-assignment-cei521.streamlit.app/
 Additional details on the implementation:
 
 While the first two widgets call the endpoints of the free web services directly, the 3rd and 4th widget call the API endpoints created in AWS that each have a lambda function as a resource (e.g the /weather endpoint has a query param of city and executes a lambda function calles weatherLambda which contains the python file with the funciton itself plus the packaged requests library). Each lambda needed to be imported as a .zip file as it needed the requests library to be included along with the lambda funtion definition file. They were both tested inside the editor using a mock json containing the query param that would be sent as an event and then deployed to the $default stage as there was no need for testing and prod stages. Once deployed, the APIs were created in API Gateway with the desired endpoint names and lambdas attached and then they were also deployed to the $default stage. Inside the application the newly created APIs were used in a similar way as the original endpoints with the exception that the uri and path were different as well as the lack of token in the request (it was added inside the lambda function). 
+
+Monitoring: 
+
+After setting up the APIs and Lambdas, we were able to monitor their usage and different metrics, particularly:
+* Invocations: sum and average
+* Errors: sum
+* CPU usage and Concurrent executions to see if we need to add another server and load balancer
+* CloudWatch logs
